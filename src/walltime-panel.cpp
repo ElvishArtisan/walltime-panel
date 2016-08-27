@@ -22,6 +22,7 @@
 #include <QApplication>
 #include <QHostAddress>
 
+#include <QMessageBox>
 #include <QStyleFactory>
 
 #include "cmdswitch.h"
@@ -40,6 +41,14 @@ MainWidget::MainWidget(QWidget *parent)
   // Read Command Options
   //
   CmdSwitch *cmd=new CmdSwitch("walltime-panel",VERSION,WALLTIME_PANEL_USAGE);
+  for(unsigned i=0;i<cmd->keys();i++) {
+    if(cmd->key(i)=="--clock-address") {
+      if(!panel_clock_address.setAddress(cmd->value(i))) {
+	QMessageBox::warning(this,"WallTime Panel",tr("Invalid IP Address!"));
+	exit(256);
+      }
+    }
+  }
   delete cmd;
 
   /*
@@ -153,8 +162,8 @@ void MainWidget::resizeEvent(QResizeEvent *e)
 
 void MainWidget::SendCommand(const QString &cmd)
 {
-  panel_socket->writeDatagram(cmd.toUtf8(),cmd.length(),
-			      QHostAddress("192.168.21.100"),6060);
+  panel_socket->
+    writeDatagram(cmd.toUtf8(),cmd.length(),panel_clock_address,6060);
   printf("SendCommand(%s)\n",(const char *)cmd.toUtf8());
 }
 
@@ -167,9 +176,7 @@ int main(int argc,char *argv[])
   //
   // Start Event Loop
   //
-  MainWidget *w=new MainWidget(NULL);
-  //  a.setMainWidget(w);
-  w->setGeometry(w->geometry().x(),w->geometry().y(),w->sizeHint().width(),w->sizeHint().height());
+  MainWidget *w=new MainWidget();
   w->show();
   return a.exec();
 }

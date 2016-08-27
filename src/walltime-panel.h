@@ -28,7 +28,7 @@
 #include <QUdpSocket>
 #include <QMainWindow>
 
-#define WALLTIME_PANEL_USAGE "\n\n"
+#define WALLTIME_PANEL_USAGE "--clock-address=<ip-addr>\n\n"
 
 class MainWidget : public QMainWindow
 {
@@ -54,6 +54,7 @@ class MainWidget : public QMainWindow
   QPushButton *panel_start_button;
   QPushButton *panel_stop_button;
   QUdpSocket *panel_socket;
+  QHostAddress panel_clock_address;
 };
 
 
