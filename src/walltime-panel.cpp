@@ -70,8 +70,7 @@ MainWidget::MainWidget(QWidget *parent)
   //
   // Fix the Window Size
   //
-  setMinimumWidth(sizeHint().width());
-  setMinimumHeight(sizeHint().height());
+  //  setMinimumSize(sizeHint());
 
   //
   // UDP Socket
@@ -82,6 +81,13 @@ MainWidget::MainWidget(QWidget *parent)
   // Configuration Dialog
   //
   panel_config_dialog=new ConfigDialog(this);
+
+  //
+  // Direction
+  //
+  panel_countmode_box=new ComboBox(this);
+  panel_countmode_box->insertItem(0,tr("Count Up"),"SM U!");
+  panel_countmode_box->insertItem(1,tr("Count Down"),"SM D!");
 
   //
   // Preset Counter
@@ -120,7 +126,7 @@ MainWidget::MainWidget(QWidget *parent)
 
 QSize MainWidget::sizeHint() const
 {
-  return QSize(150,250);
+  return QSize(115,175);
 }
 
 
@@ -139,7 +145,7 @@ void MainWidget::resetData()
 
 void MainWidget::startData()
 {
-  SendCommand("ST!");
+  SendCommand(panel_countmode_box->currentItemData().toString()+"ST!");
 }
 
 
@@ -154,24 +160,29 @@ void MainWidget::resizeEvent(QResizeEvent *e)
   int w=size().width();
   int h=size().height();
   int winc=w-20;
-  int hinc=18*h/100;
+  int hinc=14*h/100;
+
+  printf("%d X %d\n",w,h);
 
   QFont edit_font("helvetica",hinc/2,QFont::Normal);
   edit_font.setPixelSize(hinc/2);
 
-  panel_preset_edit->setGeometry(10,5,winc,hinc);
-  panel_preset_edit->setFont(edit_font);
-
   QFont button_font("helvetica",hinc/2,QFont::Bold);
   button_font.setPixelSize(hinc/2);
 
-  panel_preset_button->setGeometry(10,5+h/5,winc,hinc);
+  panel_countmode_box->setGeometry(10,5,winc,hinc);
+
+  panel_preset_edit->setGeometry(10,5+h/6,winc,hinc);
+  panel_preset_edit->setFont(edit_font);
+
+
+  panel_preset_button->setGeometry(10,5+2*h/6,winc,hinc);
   panel_preset_button->setFont(button_font);
-  panel_reset_button->setGeometry(10,5+2*h/5,winc,hinc);
+  panel_reset_button->setGeometry(10,5+3*h/6,winc,hinc);
   panel_reset_button->setFont(button_font);
-  panel_start_button->setGeometry(10,5+3*h/5,winc,hinc);
+  panel_start_button->setGeometry(10,5+4*h/6,winc,hinc);
   panel_start_button->setFont(button_font);
-  panel_stop_button->setGeometry(10,5+4*h/5,winc,hinc);
+  panel_stop_button->setGeometry(10,5+5*h/6,winc,hinc);
   panel_stop_button->setFont(button_font);
 }
 

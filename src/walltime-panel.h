@@ -28,6 +28,7 @@
 #include <QUdpSocket>
 #include <QMainWindow>
 
+#include "combobox.h"
 #include "configdialog.h"
 
 #define WALLTIME_PANEL_USAGE "--clock-address=<ip-addr>\n\n"
@@ -53,6 +54,7 @@ class MainWidget : public QMainWindow
   bool LoadConfig();
   void SaveConfig();
   QString ConfigFilename();
+  ComboBox *panel_countmode_box;
   QDateTimeEdit *panel_preset_edit;
   QPushButton *panel_preset_button;
   QPushButton *panel_reset_button;

@@ -30,11 +30,13 @@ moc_%.cpp:	%.h
 bin_PROGRAMS = walltime-panel
 
 dist_walltime_panel_SOURCES = cmdswitch.cpp cmdswitch.h\
+                              combobox.cpp combobox.h\
                               configdialog.cpp configdialog.h\
                               profile.cpp profile.h\
                               walltime-panel.cpp walltime-panel.h
 
-nodist_walltime_panel_SOURCES = moc_configdialog.cpp\
+nodist_walltime_panel_SOURCES = moc_combobox.cpp\
+                                moc_configdialog.cpp\
                                 moc_walltime-panel.cpp
 
 walltime_panel_LDADD = @GUILIBS@
