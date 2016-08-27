@@ -19,6 +19,8 @@
 //   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 //
 
+#include <stdio.h>
+
 #include <QApplication>
 #include <QHostAddress>
 
@@ -26,6 +28,7 @@
 #include <QStyleFactory>
 
 #include "cmdswitch.h"
+#include "profile.h"
 #include "walltime-panel.h"
 
 //
@@ -56,18 +59,14 @@ MainWidget::MainWidget(QWidget *parent)
   // Create And Set Icon
   //
   setWindowIcon(QPixmap(lwpath_16x16_xpm));
+  */
 
   //
   // Panel Configuration
   //
-  config=new Config();
-  if(!config->load(conffile)) {
-    QMessageBox::warning(this,"LWPanel - "+tr("Error"),
-			 tr("Unable to open configuration file at")+
-			 " \""+conffile+"\"!");
-    exit(256);
+  if(!LoadConfig()) {
   }
-  */
+
   //
   // Fix the Window Size
   //
@@ -78,6 +77,11 @@ MainWidget::MainWidget(QWidget *parent)
   // UDP Socket
   //
   panel_socket=new QUdpSocket(this);
+
+  //
+  // Configuration Dialog
+  //
+  panel_config_dialog=new ConfigDialog(this);
 
   //
   // Preset Counter
@@ -99,6 +103,18 @@ MainWidget::MainWidget(QWidget *parent)
 
   panel_stop_button=new QPushButton(tr("Stop"),this);
   QObject::connect(panel_stop_button,SIGNAL(clicked()),this,SLOT(stopData()));
+
+  //
+  // Verify Configuration
+  //
+  if(panel_clock_address.isNull()) {
+    if(panel_config_dialog->exec(&panel_clock_address)) {
+      SaveConfig();
+    }
+    else {
+      exit(0);
+    }
+  }
 }
 
 
@@ -165,6 +181,54 @@ void MainWidget::SendCommand(const QString &cmd)
   panel_socket->
     writeDatagram(cmd.toUtf8(),cmd.length(),panel_clock_address,6060);
   printf("SendCommand(%s)\n",(const char *)cmd.toUtf8());
+}
+
+
+bool MainWidget::LoadConfig()
+{
+  bool ret=false;
+
+  Profile *p=new Profile();
+  if(p->setSource(ConfigFilename())) {
+    panel_clock_address=p->addressValue("WalltimePanel","ClockAddress","");
+  }
+  delete p;
+
+  return ret;
+}
+
+
+void MainWidget::SaveConfig()
+{
+  if(!ConfigFilename().isEmpty()) {
+    FILE *f=NULL;
+    QString tempfile=ConfigFilename()+"-temp";
+    
+    if((f=fopen(tempfile.toUtf8(),"w"))!=NULL) {
+      fprintf(f,"[WalltimePanel]\n");
+      fprintf(f,"ClockAddress=%s\n",
+	      (const char *)panel_clock_address.toString().toUtf8());
+      fprintf(f,"\n");
+      fclose(f);
+      rename(tempfile.toUtf8(),ConfigFilename().toUtf8());
+    }
+  }
+}
+
+
+QString MainWidget::ConfigFilename()
+{
+  QString ret;
+
+  if(getenv("HOME")!=NULL) {
+    ret=QString(getenv("HOME"))+"/.walltime-panel";
+  }
+  if(ret.isEmpty()) {
+    QMessageBox::warning(this,"WallTime Panel - "+tr("Error"),
+			 tr("Unable to determine configuration location!"));
+  }
+
+  return ret;
 }
 
 

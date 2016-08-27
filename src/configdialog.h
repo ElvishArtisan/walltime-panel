@@ -1,6 +1,6 @@
-// walltime-panel.h
+// configdialog.h
 //
-// Segment Timer Control Applet for WallTime
+// Configuration dialog for Walltime-panel
 //
 //   (C) Copyright 2016 Fred Gleason <fredg@paravelsystems.com>
 //
@@ -19,49 +19,39 @@
 //   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 //
 
-#ifndef WALLTIME_PANEL_H
-#define WALLTIME_PANEL_H
+#ifndef CONFIGDIALOG_H
+#define CONFIGDIALOG_H
 
-#include <QDateTimeEdit>
-#include <QPixmap>
+#include <QDialog>
+#include <QHostAddress>
+#include <QLabel>
+#include <QLineEdit>
 #include <QPushButton>
-#include <QUdpSocket>
-#include <QMainWindow>
 
-#include "configdialog.h"
-
-#define WALLTIME_PANEL_USAGE "--clock-address=<ip-addr>\n\n"
-
-class MainWidget : public QMainWindow
+class ConfigDialog : public QDialog
 {
   Q_OBJECT
  public:
-  MainWidget(QWidget *parent=0);
+  ConfigDialog(QWidget *parent=0);
   QSize sizeHint() const;
 
+ public slots:
+  int exec(QHostAddress *clock_addr);
+
  private slots:
-  void presetData();
-  void resetData();
-  void startData();
-  void stopData();
+  void okData();
+  void cancelData();
 
  protected:
   void resizeEvent(QResizeEvent *e);
 
  private:
-  void SendCommand(const QString &cmd);
-  bool LoadConfig();
-  void SaveConfig();
-  QString ConfigFilename();
-  QDateTimeEdit *panel_preset_edit;
-  QPushButton *panel_preset_button;
-  QPushButton *panel_reset_button;
-  QPushButton *panel_start_button;
-  QPushButton *panel_stop_button;
-  ConfigDialog *panel_config_dialog;
-  QUdpSocket *panel_socket;
-  QHostAddress panel_clock_address;
+  QLabel *config_address_label;
+  QLineEdit *config_address_edit;
+  QPushButton *config_ok_button;
+  QPushButton *config_cancel_button;
+  QHostAddress *config_clock_address;
 };
 
 
-#endif  // WALLTIME_PANEL_H
+#endif  // CONFIGDIALOG_H
