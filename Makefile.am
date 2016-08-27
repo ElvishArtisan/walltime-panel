@@ -25,7 +25,8 @@
 ##endif
 
 ##SUBDIRS = $(DOCBOOK_AM_OPT) src
-SUBDIRS = src
+SUBDIRS = icons\
+          src
 
 rpm:	dist
 	cp walltime-panel-$(VERSION).tar.gz $(HOME)/rpmbuild/SOURCES/

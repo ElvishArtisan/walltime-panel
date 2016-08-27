@@ -59,6 +59,9 @@ QSize ConfigDialog::sizeHint() const
 int ConfigDialog::exec(QHostAddress *clock_addr)
 {
   config_clock_address=clock_addr;
+  if(!config_clock_address->isNull()) {
+    config_address_edit->setText(config_clock_address->toString());
+  }
 
   return QDialog::exec();
 }

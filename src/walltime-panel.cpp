@@ -34,6 +34,7 @@
 //
 // Icons
 //
+#include "../icons/settings.xpm"
 //#include "../../icons/lwpath-16x16.xpm"
 
 
@@ -70,7 +71,7 @@ MainWidget::MainWidget(QWidget *parent)
   //
   // Fix the Window Size
   //
-  //  setMinimumSize(sizeHint());
+  setMinimumSize(sizeHint());
 
   //
   // UDP Socket
@@ -105,10 +106,14 @@ MainWidget::MainWidget(QWidget *parent)
   connect(panel_reset_button,SIGNAL(clicked()),this,SLOT(resetData()));
 
   panel_start_button=new QPushButton(tr("Start"),this);
-  QObject::connect(panel_start_button,SIGNAL(clicked()),this,SLOT(startData()));
+  connect(panel_start_button,SIGNAL(clicked()),this,SLOT(startData()));
 
   panel_stop_button=new QPushButton(tr("Stop"),this);
-  QObject::connect(panel_stop_button,SIGNAL(clicked()),this,SLOT(stopData()));
+  connect(panel_stop_button,SIGNAL(clicked()),this,SLOT(stopData()));
+
+  panel_config_button=new QPushButton(this);
+  panel_config_button->setIcon(QPixmap(settings_xpm));
+  connect(panel_config_button,SIGNAL(clicked()),this,SLOT(configData()));
 
   //
   // Verify Configuration
@@ -155,12 +160,20 @@ void MainWidget::stopData()
 }
 
 
+void MainWidget::configData()
+{
+  if(panel_config_dialog->exec(&panel_clock_address)) {
+    SaveConfig();
+  }
+}
+
+
 void MainWidget::resizeEvent(QResizeEvent *e)
 {
   int w=size().width();
   int h=size().height();
   int winc=w-20;
-  int hinc=14*h/100;
+  int hinc=12*h/100;
 
   printf("%d X %d\n",w,h);
 
@@ -172,18 +185,23 @@ void MainWidget::resizeEvent(QResizeEvent *e)
 
   panel_countmode_box->setGeometry(10,5,winc,hinc);
 
-  panel_preset_edit->setGeometry(10,5+h/6,winc,hinc);
+  panel_preset_edit->setGeometry(10,5+h/7,winc,hinc);
   panel_preset_edit->setFont(edit_font);
 
 
-  panel_preset_button->setGeometry(10,5+2*h/6,winc,hinc);
+  panel_preset_button->setGeometry(10,5+2*h/7,winc,hinc);
   panel_preset_button->setFont(button_font);
-  panel_reset_button->setGeometry(10,5+3*h/6,winc,hinc);
+
+  panel_reset_button->setGeometry(10,5+3*h/7,winc,hinc);
   panel_reset_button->setFont(button_font);
-  panel_start_button->setGeometry(10,5+4*h/6,winc,hinc);
+
+  panel_start_button->setGeometry(10,5+4*h/7,winc,hinc);
   panel_start_button->setFont(button_font);
-  panel_stop_button->setGeometry(10,5+5*h/6,winc,hinc);
+
+  panel_stop_button->setGeometry(10,5+5*h/7,winc,hinc);
   panel_stop_button->setFont(button_font);
+
+  panel_config_button->setGeometry(w-10-hinc,5+6*h/7,hinc,hinc);
 }
 
 

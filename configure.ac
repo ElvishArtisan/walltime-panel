@@ -99,6 +99,7 @@ else
 fi 
 
 AC_CONFIG_FILES([ \
+    icons/Makefile \
     src/Makefile \
     Makefile ])
 AC_OUTPUT()

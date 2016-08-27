@@ -45,6 +45,7 @@ class MainWidget : public QMainWindow
   void resetData();
   void startData();
   void stopData();
+  void configData();
 
  protected:
   void resizeEvent(QResizeEvent *e);
@@ -60,6 +61,7 @@ class MainWidget : public QMainWindow
   QPushButton *panel_reset_button;
   QPushButton *panel_start_button;
   QPushButton *panel_stop_button;
+  QPushButton *panel_config_button;
   ConfigDialog *panel_config_dialog;
   QUdpSocket *panel_socket;
   QHostAddress panel_clock_address;
