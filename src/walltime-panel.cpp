@@ -23,8 +23,8 @@
 
 #include <QApplication>
 #include <QHostAddress>
-
 #include <QMessageBox>
+
 #include <QStyleFactory>
 
 #include "cmdswitch.h"
@@ -61,12 +61,6 @@ MainWidget::MainWidget(QWidget *parent)
   //
   setWindowIcon(QPixmap(lwpath_16x16_xpm));
   */
-
-  //
-  // Panel Configuration
-  //
-  if(!LoadConfig()) {
-  }
 
   //
   // Fix the Window Size
@@ -118,6 +112,7 @@ MainWidget::MainWidget(QWidget *parent)
   //
   // Verify Configuration
   //
+  LoadConfig();
   if(panel_clock_address.isNull()) {
     if(panel_config_dialog->exec(&panel_clock_address)) {
       SaveConfig();
@@ -131,7 +126,7 @@ MainWidget::MainWidget(QWidget *parent)
 
 QSize MainWidget::sizeHint() const
 {
-  return QSize(115,175);
+  return QSize(150,200);
 }
 
 
@@ -165,6 +160,13 @@ void MainWidget::configData()
   if(panel_config_dialog->exec(&panel_clock_address)) {
     SaveConfig();
   }
+}
+
+
+void MainWidget::closeEvent(QCloseEvent *e)
+{
+  SaveConfig();
+  e->accept();
 }
 
 
@@ -210,54 +212,6 @@ void MainWidget::SendCommand(const QString &cmd)
   panel_socket->
     writeDatagram(cmd.toUtf8(),cmd.length(),panel_clock_address,6060);
   printf("SendCommand(%s)\n",(const char *)cmd.toUtf8());
-}
-
-
-bool MainWidget::LoadConfig()
-{
-  bool ret=false;
-
-  Profile *p=new Profile();
-  if(p->setSource(ConfigFilename())) {
-    panel_clock_address=p->addressValue("WalltimePanel","ClockAddress","");
-  }
-  delete p;
-
-  return ret;
-}
-
-
-void MainWidget::SaveConfig()
-{
-  if(!ConfigFilename().isEmpty()) {
-    FILE *f=NULL;
-    QString tempfile=ConfigFilename()+"-temp";
-    
-    if((f=fopen(tempfile.toUtf8(),"w"))!=NULL) {
-      fprintf(f,"[WalltimePanel]\n");
-      fprintf(f,"ClockAddress=%s\n",
-	      (const char *)panel_clock_address.toString().toUtf8());
-      fprintf(f,"\n");
-      fclose(f);
-      rename(tempfile.toUtf8(),ConfigFilename().toUtf8());
-    }
-  }
-}
-
-
-QString MainWidget::ConfigFilename()
-{
-  QString ret;
-
-  if(getenv("HOME")!=NULL) {
-    ret=QString(getenv("HOME"))+"/.walltime-panel";
-  }
-  if(ret.isEmpty()) {
-    QMessageBox::warning(this,"WallTime Panel - "+tr("Error"),
-			 tr("Unable to determine configuration location!"));
-  }
-
-  return ret;
 }
 
 

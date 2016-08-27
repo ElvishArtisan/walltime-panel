@@ -32,7 +32,7 @@ class ComboBox : public QComboBox
   ComboBox(QWidget *parent=0);
   void setReadOnly(bool state);
   QVariant currentItemData(int role=Qt::UserRole);
-  bool setCurrentItemData(unsigned val);
+  bool setCurrentItemData(const QVariant &value);
 
  protected:
   void keyPressEvent(QKeyEvent *e);

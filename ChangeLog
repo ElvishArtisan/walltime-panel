@@ -9,3 +9,6 @@
 	* Added a 'Count Up/Count Down' control.
 2016-08-27 Fred Gleason <fredg@paravelsystems.com>
 	* Added a Setup button.
+2016-08-27 Fred Gleason <fredg@paravelsystems.com>
+	* Made Preset, Countdown Mode and widget geometry persistent across
+	instances.

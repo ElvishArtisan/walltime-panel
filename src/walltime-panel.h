@@ -48,6 +48,7 @@ class MainWidget : public QMainWindow
   void configData();
 
  protected:
+  void closeEvent(QCloseEvent *e);
   void resizeEvent(QResizeEvent *e);
 
  private:

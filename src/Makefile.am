@@ -31,6 +31,7 @@ bin_PROGRAMS = walltime-panel
 
 dist_walltime_panel_SOURCES = cmdswitch.cpp cmdswitch.h\
                               combobox.cpp combobox.h\
+                              config.cpp\
                               configdialog.cpp configdialog.h\
                               profile.cpp profile.h\
                               walltime-panel.cpp walltime-panel.h
