@@ -102,9 +102,10 @@ AC_CONFIG_FILES([ \
     icons/Makefile \
     src/Makefile \
     xdg/Makefile \
-    Makefile ])
+    Makefile \
+    walltime-panel.spec \
+])
 AC_OUTPUT()
-chmod 755 rc.lwpathd
 
 AC_MSG_NOTICE()
 AC_MSG_NOTICE(Now enter 'make' to build the software.)

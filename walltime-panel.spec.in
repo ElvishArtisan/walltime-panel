@@ -1,8 +1,8 @@
-## lwpath.spec.in
+## walltime-panel.spec.in
 ##
-##    Switcher Matrix Control System
+##    Remote control applet for the WallTime NTP Clock
 ##
-##    Copyright (C) 2015  Fred Gleason <fredg@paravelsystems.com>
+##    Copyright (C) 2016 Fred Gleason <fredg@paravelsystems.com>
 ##
 ##    This program is free software; you can redistribute it and/or modify
 ##    it under the terms of version 2 of the GNU General Public License as
@@ -19,8 +19,8 @@
 ##    Boston, MA  02111-1307  USA
 ##
 
-Summary: Switcher Matrix Control System
-Name: lwpath
+Summary: Remote control applet for WallTime
+Name: walltime-panel
 Version: @VERSION@
 Release: @RPM_RELEASE@%{?dist}
 License: GPLv2
@@ -31,19 +31,9 @@ BuildRequires: qt-devel
 BuildRoot: /var/tmp/%{name}-@VERSION@
 
 
-%package panels
-Summary: GUI control panels for LWPath
-Group: Productivity/Multimedia/Other
-
-
 %description
-LWPath is a switch matrix control system intended for use in professional
-broadcast environments.
-
-
-%description panels
-GUI control panels for use the LWPath.  These allow control of individual
-crosspoint outputs by means of point-and-click interfaces.
+Walltime-panel is a GUI applet for remotely controlling the Segment Timer
+on a WallTime NTP Clock and Notification System display.
 
 
 %prep
@@ -60,45 +50,9 @@ make
 %install
 rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT/var/cache/aoip
+
 
 %post
-if test "@DISTRO@" = "suse" ; then
-  PACKAGE_DOC_DIR=%_docdir/%{name}
-fi
-if test "@DISTRO@" = "redhat" ; then
-  PACKAGE_DOC_DIR=%_docdir/%{name}-@VERSION@
-fi
-if test ! -f /etc/lwpath.conf ; then
-    cp $PACKAGE_DOC_DIR/lwpath-sample.conf /etc/lwpath.conf
-fi
-if [ -x %{_bindir}/systemctl ] ; then
-  systemctl daemon-reload
-fi
-
-
-%preun
-if [ -x %{_bindir}/systemctl ] ; then
-  systemctl stop lwpath
-fi
-
-
-%postun
-if [ -x %{_bindir}/systemctl ] ; then
-  systemctl daemon-reload
-fi
-
-
-%post panels
-if test "@DISTRO@" = "suse" ; then
-  PACKAGE_DOC_DIR=%_docdir/lwpath-panels
-fi
-if test "@DISTRO@" = "redhat" ; then
-  PACKAGE_DOC_DIR=%_docdir/lwpath-panels-@VERSION@
-fi
-if test ! -f /etc/lwpanel.conf ; then
-    cp $PACKAGE_DOC_DIR/lwpanel-sample.conf /etc/lwpanel.conf
-fi
 if [ -x %{_bindir}/gtk-update-icon-cache ] ; then
   %{_bindir}/gtk-update-icon-cache -f --quiet %{_datadir}/icons/hicolor || :
 fi
@@ -110,37 +64,19 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root)
-%{_sbindir}/lwpathd
-%{_sbindir}/lwckmap
-%{_sbindir}/lwmap
-/etc/init.d/lwpathd
-/usr/lib/systemd/system/lwpath.service
-%{_mandir}/man8/lwckmap.8.gz
-%{_mandir}/man8/lwmap.8.gz
-%{_mandir}/man8/lwpathd.8.gz
-%dir /var/cache/aoip
+%{_bindir}/walltime-panel
+%{_datadir}/applications/walltime-panel.desktop
+%{_datadir}/icons/hicolor/16x16/apps/walltime-panel.png
+%{_datadir}/icons/hicolor/22x22/apps/walltime-panel.png
+%{_datadir}/icons/hicolor/32x32/apps/walltime-panel.png
+%{_datadir}/icons/hicolor/48x48/apps/walltime-panel.png
 %doc AUTHORS
 %doc ChangeLog
 %doc COPYING 
 %doc NEWS 
 %doc README 
-%doc conf/lwpathd_map-sample.dat
-%doc conf/lwpath-sample.conf
 
-
-%files panels
-%{_bindir}/lwpanel
-%{_bindir}/lwxypanel
-%{_mandir}/man1/lwpanel.1.gz
-%{_mandir}/man1/lwxypanel.1.gz
-%{_datadir}/applications/lwpath-*.desktop
-%{_datadir}/icons/hicolor/16x16/apps/lwpath.png
-%{_datadir}/icons/hicolor/32x32/apps/lwpath.png
-%{_datadir}/icons/hicolor/48x48/apps/lwpath.png
-%doc conf/lwpanel-sample.conf
 
 %changelog
-* Sun Mar 13 2016 Fred Gleason <fredg@paravelsystems.com>
--- Added LWPanel(1).
-* Fri Nov 13 2015 Fred Gleason <fredg@paravelsystems.com>
+* Sun Aug 28 2016 Fred Gleason <fredg@paravelsystems.com>
 -- Initial RPM creation.

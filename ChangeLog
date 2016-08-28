@@ -17,3 +17,5 @@
 2016-08-28 Fred Gleason <fredg@paravelsystems.com>
 	* Added icons in 'icons/'.
 	* Added 'xdg/walltime-panel.desktop'.
+2016-08-28 Fred Gleason <fredg@paravelsystems.com>
+	* Enabled the 'make rpm' target.
