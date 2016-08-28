@@ -101,6 +101,7 @@ fi
 AC_CONFIG_FILES([ \
     icons/Makefile \
     src/Makefile \
+    xdg/Makefile \
     Makefile ])
 AC_OUTPUT()
 chmod 755 rc.lwpathd

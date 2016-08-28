@@ -14,3 +14,6 @@
 	instances.
 2016-08-28 Fred Gleason <fredg@paravelsystems.com>
 	* Fixed up resizing to preserve control layout.
+2016-08-28 Fred Gleason <fredg@paravelsystems.com>
+	* Added icons in 'icons/'.
+	* Added 'xdg/walltime-panel.desktop'.

@@ -40,7 +40,7 @@
 //
 #include "../icons/settings.xpm"
 #include "../icons/walltime_logo.xpm"
-//#include "../../icons/lwpath-16x16.xpm"
+#include "../icons/walltime-16x16.xpm"
 
 
 MainWidget::MainWidget(QWidget *parent)
@@ -61,9 +61,10 @@ MainWidget::MainWidget(QWidget *parent)
   delete cmd;
 
   //
-  // Create And Set Icon
+  // Window Title Bar
   //
-  //  setWindowIcon(QPixmap(lwpath_16x16_xpm));
+  setWindowTitle(tr("WallTime Remote Control"));
+  setWindowIcon(QPixmap(walltime_16x16_xpm));
 
   //
   // Fix the Window Size
