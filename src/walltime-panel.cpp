@@ -22,7 +22,11 @@
 #include <stdio.h>
 
 #include <QApplication>
+#include <QFontDatabase>
+#include <QFontInfo>
+#include <QFontMetrics>
 #include <QHostAddress>
+#include <QList>
 #include <QMessageBox>
 
 #include <QStyleFactory>
@@ -35,6 +39,7 @@
 // Icons
 //
 #include "../icons/settings.xpm"
+#include "../icons/walltime_logo.xpm"
 //#include "../../icons/lwpath-16x16.xpm"
 
 
@@ -55,12 +60,10 @@ MainWidget::MainWidget(QWidget *parent)
   }
   delete cmd;
 
-  /*
   //
   // Create And Set Icon
   //
-  setWindowIcon(QPixmap(lwpath_16x16_xpm));
-  */
+  //  setWindowIcon(QPixmap(lwpath_16x16_xpm));
 
   //
   // Fix the Window Size
@@ -76,6 +79,7 @@ MainWidget::MainWidget(QWidget *parent)
   // Configuration Dialog
   //
   panel_config_dialog=new ConfigDialog(this);
+
 
   //
   // Direction
@@ -105,9 +109,15 @@ MainWidget::MainWidget(QWidget *parent)
   panel_stop_button=new QPushButton(tr("Stop"),this);
   connect(panel_stop_button,SIGNAL(clicked()),this,SLOT(stopData()));
 
+  panel_logo_label=new QLabel(this);
+  panel_logo_label->setPixmap(QPixmap(walltime_logo_xpm));
+  panel_logo_label->setScaledContents(true);
+
   panel_config_button=new QPushButton(this);
   panel_config_button->setIcon(QPixmap(settings_xpm));
   connect(panel_config_button,SIGNAL(clicked()),this,SLOT(configData()));
+
+  MakeFontMap();
 
   //
   // Verify Configuration
@@ -177,33 +187,86 @@ void MainWidget::resizeEvent(QResizeEvent *e)
   int winc=w-20;
   int hinc=12*h/100;
 
-  printf("%d X %d\n",w,h);
+  //  printf("%d X %d\n",w,h);
 
-  QFont edit_font("helvetica",hinc/2,QFont::Normal);
-  edit_font.setPixelSize(hinc/2);
 
-  QFont button_font("helvetica",hinc/2,QFont::Bold);
-  button_font.setPixelSize(hinc/2);
+  //
+  // Calculate Fonts
+  //
+  QFont edit_font=font();
+  for(int i=(int)panel_font_sizes.size()-1;i>=0;i--) {
+    if((panel_countdown_font_widths[i]<4*winc/5)&&(panel_font_sizes[i]<hinc/2)) {
+      edit_font=QFont(font().family(),panel_font_sizes[i],QFont::Normal);
+      break;
+    }
+  }
+  QFont start_font("helvetica",hinc/2,QFont::Bold);
+  for(int i=(int)panel_font_sizes.size()-1;i>=0;i--) {
+    if((panel_start_font_widths[i]<(3*winc/5))&&(panel_font_sizes[i]<7*hinc/10)) {
+      start_font=QFont(font().family(),panel_font_sizes[i],QFont::Bold);
+      break;
+    }
+  }
+  QFont preset_font(font().family(),hinc/2,QFont::Bold);
+  for(int i=(int)panel_font_sizes.size()-1;i>=0;i--) {
+    if((panel_preset_font_widths[i]<(winc/3))&&(panel_font_sizes[i]<hinc/2)) {
+      preset_font=QFont(font().family(),panel_font_sizes[i],QFont::Bold);
+      break;
+    }
+  }
+
+  //
+  // Calculate Logo Size
+  //
+  int logo_width=500*hinc/187;
+  int logo_height=hinc;
+  if(logo_width>(w-20-hinc)) {
+    logo_width=w-20-hinc;
+    logo_height=187*logo_width/500;
+  }
 
   panel_countmode_box->setGeometry(10,5,winc,hinc);
+  panel_countmode_box->setFont(edit_font);
 
-  panel_preset_edit->setGeometry(10,5+h/7,winc,hinc);
+  panel_preset_edit->setGeometry(10,5+1*h/7,winc,hinc);
   panel_preset_edit->setFont(edit_font);
 
+  panel_preset_button->setGeometry(10,5+2*h/7,winc/2-10+6,hinc);
+  panel_preset_button->setFont(preset_font);
 
-  panel_preset_button->setGeometry(10,5+2*h/7,winc,hinc);
-  panel_preset_button->setFont(button_font);
+  panel_reset_button->setGeometry(13+winc/2,5+2*h/7,winc/2-10+6,hinc);
+  panel_reset_button->setFont(preset_font);
 
-  panel_reset_button->setGeometry(10,5+3*h/7,winc,hinc);
-  panel_reset_button->setFont(button_font);
+  panel_start_button->setGeometry(10,5+3*h/7,winc,3*hinc/2);
+  panel_start_button->setFont(start_font);
 
-  panel_start_button->setGeometry(10,5+4*h/7,winc,hinc);
-  panel_start_button->setFont(button_font);
+  panel_stop_button->setGeometry(10,5+9*h/14,winc,3*hinc/2);
+  panel_stop_button->setFont(start_font);
 
-  panel_stop_button->setGeometry(10,5+5*h/7,winc,hinc);
-  panel_stop_button->setFont(button_font);
+  panel_logo_label->setGeometry(10,5+6*h/7,logo_width,logo_height);
 
   panel_config_button->setGeometry(w-10-hinc,5+6*h/7,hinc,hinc);
+}
+
+
+void MainWidget::MakeFontMap()
+{
+  QList<int> sizes;
+  QFontDatabase fdb;
+
+  QFontInfo info(font());
+  sizes=fdb.smoothSizes(info.family(),"Bold");
+  if(sizes.size()==0) {
+    sizes=fdb.pointSizes(info.family());
+  }
+  for(int i=0;i<sizes.size();i++) {
+    QFont font(info.family(),sizes[i],QFont::Bold);
+    QFontMetrics fm(font);
+    panel_font_sizes.push_back(sizes[i]);
+    panel_countdown_font_widths.push_back(fm.width(tr("Count Down")));
+    panel_preset_font_widths.push_back(fm.width(tr("Preset")));
+    panel_start_font_widths.push_back(fm.width(tr("Start")));
+  }
 }
 
 
@@ -211,7 +274,6 @@ void MainWidget::SendCommand(const QString &cmd)
 {
   panel_socket->
     writeDatagram(cmd.toUtf8(),cmd.length(),panel_clock_address,6060);
-  printf("SendCommand(%s)\n",(const char *)cmd.toUtf8());
 }
 
 

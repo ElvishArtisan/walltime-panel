@@ -20,7 +20,8 @@
 ##
 ## Use automake to process this into a Makefile.in
 
-EXTRA_DIST = settings.xpm
+EXTRA_DIST = settings.xpm\
+             walltime_logo.xpm
 
 CLEANFILES = *~
 

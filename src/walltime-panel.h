@@ -22,7 +22,10 @@
 #ifndef WALLTIME_PANEL_H
 #define WALLTIME_PANEL_H
 
+#include <vector>
+
 #include <QDateTimeEdit>
+#include <QLabel>
 #include <QPixmap>
 #include <QPushButton>
 #include <QUdpSocket>
@@ -53,6 +56,7 @@ class MainWidget : public QMainWindow
 
  private:
   void SendCommand(const QString &cmd);
+  void MakeFontMap();
   bool LoadConfig();
   void SaveConfig();
   QString ConfigFilename();
@@ -62,10 +66,15 @@ class MainWidget : public QMainWindow
   QPushButton *panel_reset_button;
   QPushButton *panel_start_button;
   QPushButton *panel_stop_button;
+  QLabel *panel_logo_label;
   QPushButton *panel_config_button;
   ConfigDialog *panel_config_dialog;
   QUdpSocket *panel_socket;
   QHostAddress panel_clock_address;
+  std::vector<int> panel_font_sizes;
+  std::vector<int> panel_countdown_font_widths;
+  std::vector<int> panel_preset_font_widths;
+  std::vector<int> panel_start_font_widths;
 };
 
 
