@@ -40,3 +40,5 @@
 2016-08-28 Fred Gleason <fredg@paravelsystems.com>
 	* Modified build system in 'Makefile.am' to use Pkgconfig to
 	locate library binaries.
+2016-08-28 Fred Gleason <fredg@paravelsystems.com>
+	* Added 'icons/walltime-48x48.ico'.

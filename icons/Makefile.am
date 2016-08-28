@@ -43,6 +43,7 @@ EXTRA_DIST = settings.xpm\
              walltime-16x16.png\
              walltime-22x22.png\
              walltime-32x32.png\
+             walltime-48x48.ico\
              walltime-48x48.png\
              walltime-128x128.png\
              walltime-256x256.png\
