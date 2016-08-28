@@ -19,3 +19,6 @@
 	* Added 'xdg/walltime-panel.desktop'.
 2016-08-28 Fred Gleason <fredg@paravelsystems.com>
 	* Enabled the 'make rpm' target.
+2016-08-28 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'src/config.cpp' that caused the geometry to be
+	incorrect when starting with no config file present.

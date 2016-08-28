@@ -35,17 +35,15 @@ bool MainWidget::LoadConfig()
       setCurrentItemData(p->stringValue("WalltimePanel","CountMode","SM U!"));
     panel_preset_edit->
       setTime(QTime().addSecs(p->intValue("WalltimePanel","Preset")));
-    int x=p->intValue("WalltimePanel","GeometryX");
-    int y=p->intValue("WalltimePanel","GeometryY");
-    int w=p->intValue("WalltimePanel","GeometryWidth");
-    int h=p->intValue("WalltimePanel","GeometryHeight");
-    if((w<=0)||(h<=0)) {  // First time startup
-      setGeometry(geometry().x(),geometry().y(),
-		  sizeHint().width(),sizeHint().width());
-    }
-    else {
-      setGeometry(x,y,w,h);
-    }
+    int x=p->intValue("WalltimePanel","GeometryX",geometry().x());
+    int y=p->intValue("WalltimePanel","GeometryY",geometry().y());
+    int w=p->intValue("WalltimePanel","GeometryWidth",sizeHint().width());
+    int h=p->intValue("WalltimePanel","GeometryHeight",sizeHint().height());
+    setGeometry(x,y,w,h);
+  }
+  else {
+    setGeometry(geometry().x(),geometry().y(),
+		sizeHint().width(),sizeHint().height());
   }
   delete p;
 
