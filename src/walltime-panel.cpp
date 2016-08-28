@@ -22,7 +22,6 @@
 #include <stdio.h>
 
 #include <QApplication>
-#include <QCoreApplication>  // So we get 'qApp'
 #include <QFontDatabase>
 #include <QFontInfo>
 #include <QFontMetrics>

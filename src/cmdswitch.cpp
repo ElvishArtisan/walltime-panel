@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include <QApplication>  // So we get 'qApp'
 #include <QCoreApplication>
 
 #include "cmdswitch.h"
