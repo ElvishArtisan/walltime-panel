@@ -65,23 +65,6 @@ AR_GET_DISTRO()
 AC_SUBST(DISTRO,$ar_gcc_distro)
 
 #
-# Linux vs. OS X Setup
-#
-if test $ar_gcc_os = "darwin10" ; then
-  AC_SUBST(SIRLIBS,"")
-  AC_SUBST(SIRFLAGS,"-framework QtCore -framework QtNetwork")
-  AC_SUBST(GUILIBS,"")
-  AC_SUBST(GUIFLAGS,"-framework QtCore -framework QtNetwork -framework QtGui")
-  AC_DEFINE(OSX)
-else
-  AC_SUBST(SIRLIBS," -ldl -lQtCore -lQtNetwork")
-  AC_SUBST(SIRFLAGS,"")
-  AC_SUBST(GUILIBS," -lQtCore -lQtNetwork -lQtGui")
-  AC_SUBST(GUIFLAGS,"")
-  AC_DEFINE(LINUX)
-fi
-
-#
 # Configure RPM Build
 #
 AC_CHECK_PROG(RPMBUILD_FOUND,rpmbuild,[yes],[])

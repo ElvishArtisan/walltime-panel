@@ -40,8 +40,7 @@ nodist_walltime_panel_SOURCES = moc_combobox.cpp\
                                 moc_configdialog.cpp\
                                 moc_walltime-panel.cpp
 
-walltime_panel_LDADD = @GUILIBS@
-walltime_panel_LDFLAGS = @GUIFLAGS@
+walltime_panel_LDADD = @QT4_LIBS@
 
 CLEANFILES = *~\
              moc_*\
