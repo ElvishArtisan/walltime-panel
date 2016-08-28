@@ -27,3 +27,5 @@
 2016-08-28 Fred Gleason <fredg@paravelsystems.com>
 	* Fixed a bug in 'src/walltime-panel.cpp' that broke the build on
 	RHEL 5.
+2016-08-28 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 0.6.1.
