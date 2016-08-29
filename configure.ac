@@ -59,8 +59,10 @@ AC_SUBST(VENDOR,$ar_gcc_distro)
 AC_SUBST(ARCH,$ar_gcc_arch)
 if test $ar_gcc_os = mingw32 ; then
   AC_SUBST(RESOURCES,icons.o)
+  AC_SUBST(LDFLAGS,"-mwindows")
 else
   AC_SUBST(RESOURCES,"")
+  AC_SUBST(LDFLAGS,"")
 fi
 
 #

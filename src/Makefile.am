@@ -46,6 +46,7 @@ nodist_walltime_panel_SOURCES = moc_combobox.cpp\
 EXTRA_walltime_panel_DEPENDENCIES = @RESOURCES@
 
 walltime_panel_LDADD = @QT4_LIBS@ @RESOURCES@
+walltime_panel_LDFLAGS = @LDFLAGS@
 
 CLEANFILES = *~\
              moc_*\
