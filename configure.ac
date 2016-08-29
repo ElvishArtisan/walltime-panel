@@ -57,6 +57,11 @@ AM_CONDITIONAL([DOCBOOK_AM], [test "$USING_DOCBOOK" = yes])
 AR_GCC_TARGET()
 AC_SUBST(VENDOR,$ar_gcc_distro)
 AC_SUBST(ARCH,$ar_gcc_arch)
+if test $ar_gcc_os = mingw32 ; then
+  AC_SUBST(RESOURCES,icons.o)
+else
+  AC_SUBST(RESOURCES,"")
+fi
 
 #
 # Determine Distro
@@ -89,6 +94,12 @@ AC_CONFIG_FILES([ \
     walltime-panel.spec \
 ])
 AC_OUTPUT()
+
+#
+# Generate symlinks
+#
+rm -f src/walltime.ico
+ln -s ../icons/walltime-48x48.ico src/walltime.ico
 
 AC_MSG_NOTICE()
 AC_MSG_NOTICE(Now enter 'make' to build the software.)

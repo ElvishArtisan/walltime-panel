@@ -1,4 +1,5 @@
 *~
+*.exe
 *.o
 *.rpm
 *.spec
@@ -15,4 +16,5 @@ Makefile
 Makefile.in
 missing
 moc_*
+src/walltime.ico
 src/walltime-panel

@@ -42,3 +42,5 @@
 	locate library binaries.
 2016-08-28 Fred Gleason <fredg@paravelsystems.com>
 	* Added 'icons/walltime-48x48.ico'.
+2016-08-29 Fred Gleason <fredg@paravelsystems.com>
+	* Enabled linking of the application icon on Windows.

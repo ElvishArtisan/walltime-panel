@@ -19,13 +19,16 @@
 ##
 ## Use automake to process this into a Makefile.in
 
-AM_CPPFLAGS = -Wall -DPREFIX=\"$(prefix)\" -Wno-strict-aliasing -fPIC @QT4_CFLAGS@
+AM_CPPFLAGS = -Wall -DPREFIX=\"$(prefix)\" -Wno-strict-aliasing @QT4_CFLAGS@
 MOC = @QT4_MOC@
 
 # The dependency for qt's Meta Object Compiler (moc)
 moc_%.cpp:	%.h
 	@MOC@ $< -o $@
 
+# The dependency for Windows resource compiler
+%.o:	%.rc
+	$(WINDRES) -O coff $< $@
 
 bin_PROGRAMS = walltime-panel
 
@@ -40,7 +43,9 @@ nodist_walltime_panel_SOURCES = moc_combobox.cpp\
                                 moc_configdialog.cpp\
                                 moc_walltime-panel.cpp
 
-walltime_panel_LDADD = @QT4_LIBS@
+EXTRA_walltime_panel_DEPENDENCIES = @RESOURCES@
+
+walltime_panel_LDADD = @QT4_LIBS@ @RESOURCES@
 
 CLEANFILES = *~\
              moc_*\
@@ -48,5 +53,6 @@ CLEANFILES = *~\
              *.idb\
              *.pdb\
              *ilk
+DISTCLEANFILES = *.ico
 MAINTAINERCLEANFILES = *~\
                        Makefile.in
