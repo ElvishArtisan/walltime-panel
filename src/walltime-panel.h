@@ -57,9 +57,8 @@ class MainWidget : public QMainWindow
  private:
   void SendCommand(const QString &cmd);
   void MakeFontMap();
-  bool LoadConfig();
+  void LoadConfig();
   void SaveConfig();
-  QString ConfigFilename();
   ComboBox *panel_countmode_box;
   QDateTimeEdit *panel_preset_edit;
   QPushButton *panel_preset_button;

@@ -22,6 +22,7 @@
 #include <stdio.h>
 
 #include <QApplication>
+#include <QCoreApplication>
 #include <QFontDatabase>
 #include <QFontInfo>
 #include <QFontMetrics>
@@ -32,7 +33,6 @@
 #include <QStyleFactory>
 
 #include "cmdswitch.h"
-#include "profile.h"
 #include "walltime-panel.h"
 
 //
@@ -59,6 +59,10 @@ MainWidget::MainWidget(QWidget *parent)
     }
   }
   delete cmd;
+
+  QCoreApplication::setOrganizationName("Paravel Systems");
+  QCoreApplication::setOrganizationDomain("paravelsystems.com");
+  QCoreApplication::setApplicationName("walltime-panel");
 
   //
   // Window Title Bar

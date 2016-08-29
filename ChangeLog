@@ -46,3 +46,6 @@
 	* Enabled linking of the application icon on Windows.
 2016-08-29 Fred Gleason <fredg@paravelsystems.com>
 	* Enabled build of a GUI executable under Windows.
+2016-08-29 Fred Gleason <fredg@paravelsystems.com>
+	* Rewrote 'LoadConfig()' and 'SaveConfig()' methods to use
+	QSettings'.
