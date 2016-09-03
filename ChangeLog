@@ -60,3 +60,6 @@
 	* Added 'walltime-panel.ism'.
 2016-09-02 Fred Gleason <fredg@paravelsystems.com>
 	* Incremented the package version to 0.6.3.
+2016-09-03 Fred Gleason <fredg@paravelsystems.com>
+	* Added 'libgcc_s_sjlj-1.dll' to the set of installation DLLs for
+	Windows in 'Makefile.am' and 'walltime-panel.ism'.
