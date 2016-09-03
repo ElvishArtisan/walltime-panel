@@ -102,16 +102,16 @@ MainWidget::MainWidget(QWidget *parent)
   //
   // Buttons
   //
-  panel_preset_button=new QPushButton(tr("Preset"),this);
+  panel_preset_button=new QPushButton(tr("&Preset"),this);
   connect(panel_preset_button,SIGNAL(clicked()),this,SLOT(presetData()));
 
-  panel_reset_button=new QPushButton(tr("Reset"),this);
+  panel_reset_button=new QPushButton(tr("&Clear"),this);
   connect(panel_reset_button,SIGNAL(clicked()),this,SLOT(resetData()));
 
-  panel_start_button=new QPushButton(tr("Start"),this);
+  panel_start_button=new QPushButton(tr("&Start"),this);
   connect(panel_start_button,SIGNAL(clicked()),this,SLOT(startData()));
 
-  panel_stop_button=new QPushButton(tr("Stop"),this);
+  panel_stop_button=new QPushButton(tr("S&top"),this);
   connect(panel_stop_button,SIGNAL(clicked()),this,SLOT(stopData()));
 
   panel_logo_label=new QLabel(this);

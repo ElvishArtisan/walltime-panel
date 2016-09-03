@@ -51,3 +51,6 @@
 	QSettings'.
 2016-09-02 Fred Gleason <fredg@paravelsystems.com>
 	* Added a 'make install-win32' target.
+2016-09-02 Fred Gleason <fredg@paravelsystems.com>
+	* Changed the legend on the reset button to 'Clear'.
+	* Added keyboard accelerators for the four buttons.
