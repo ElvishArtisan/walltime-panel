@@ -51,7 +51,9 @@ install-win32:
 EXTRA_DIST = autogen.sh\
              get_distro.sh\
              get_target.sh\
+             walltime-panel.ism\
              walltime-panel.spec.in\
+             COPYING.rtf\
              PACKAGE_VERSION
 
 CLEANFILES = *~\
