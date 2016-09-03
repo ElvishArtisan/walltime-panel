@@ -37,6 +37,17 @@ rpm:	dist
 	rm $(HOME)/rpmbuild/SOURCES/walltime-panel-$(VERSION).tar.gz
 	rm -rf $(HOME)/rpmbuild/BUILD/walltime-panel-$(VERSION)
 
+install-win32:	
+	cp src/walltime-panel.exe .
+	cp $(MINGW32_SYS_ROOT)/bin/QtCore4.dll .
+	cp $(MINGW32_SYS_ROOT)/bin/QtGui4.dll .
+	cp $(MINGW32_SYS_ROOT)/bin/QtNetwork4.dll .
+	cp $(MINGW32_SYS_ROOT)/bin/libpng16-16.dll .
+	cp $(MINGW32_SYS_ROOT)/bin/libstdc++-6.dll .
+	cp $(MINGW32_SYS_ROOT)/bin/libwinpthread-1.dll .
+	cp $(MINGW32_SYS_ROOT)/bin/zlib1.dll .
+
+
 EXTRA_DIST = autogen.sh\
              get_distro.sh\
              get_target.sh\
@@ -45,6 +56,8 @@ EXTRA_DIST = autogen.sh\
 
 CLEANFILES = *~\
              *.deb\
+             *.dll\
+             *.exe\
              *.mo\
              *.rpm\
              *.tar.gz\
