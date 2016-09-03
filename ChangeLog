@@ -58,3 +58,5 @@
 	* Added a 'SpaceBar Action' control to the Configuration Dialog.
 2016-09-02 Fred Gleason <fredg@paravelsystems.com>
 	* Added 'walltime-panel.ism'.
+2016-09-02 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 0.6.3.
