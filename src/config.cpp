@@ -21,6 +21,7 @@
 
 #include <QSettings>
 
+#include "configdialog.h"
 #include "walltime-panel.h"
 
 void MainWidget::LoadConfig()
@@ -31,6 +32,8 @@ void MainWidget::LoadConfig()
   panel_countmode_box->
     setCurrentItemData(s.value("CountMode","SM U!").toString());
   panel_preset_edit->setTime(QTime().addSecs(s.value("Preset").toInt()));
+  panel_key_action=(ConfigDialog::KeyAction)
+    s.value("SpacebarAction",(int)ConfigDialog::None).toInt();
   resize(s.value("MainWindowSize",sizeHint()).toSize());
   move(s.value("MainWindowPosition",
 	       QPoint(geometry().x(),geometry().y())).toPoint());
@@ -44,6 +47,7 @@ void MainWidget::SaveConfig()
   s.setValue("ClockAddress",panel_clock_address.toString());
   s.setValue("CountMode",panel_countmode_box->currentItemData().toString());
   s.setValue("Preset",QTime().secsTo(panel_preset_edit->time()));
+  s.setValue("SpacebarAction",(int)panel_key_action);
   s.setValue("MainWindowSize",size());
   s.setValue("MainWindowPosition",pos());
 }

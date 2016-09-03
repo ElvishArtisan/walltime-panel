@@ -90,6 +90,7 @@ MainWidget::MainWidget(QWidget *parent)
   // Direction
   //
   panel_countmode_box=new ComboBox(this);
+  panel_countmode_box->setFocusPolicy(Qt::NoFocus);
   panel_countmode_box->insertItem(0,tr("Count Up"),"SM U!");
   panel_countmode_box->insertItem(1,tr("Count Down"),"SM D!");
 
@@ -103,15 +104,19 @@ MainWidget::MainWidget(QWidget *parent)
   // Buttons
   //
   panel_preset_button=new QPushButton(tr("&Preset"),this);
+  panel_preset_button->setFocusPolicy(Qt::NoFocus);
   connect(panel_preset_button,SIGNAL(clicked()),this,SLOT(presetData()));
 
   panel_reset_button=new QPushButton(tr("&Clear"),this);
+  panel_reset_button->setFocusPolicy(Qt::NoFocus);
   connect(panel_reset_button,SIGNAL(clicked()),this,SLOT(resetData()));
 
   panel_start_button=new QPushButton(tr("&Start"),this);
+  panel_start_button->setFocusPolicy(Qt::NoFocus);
   connect(panel_start_button,SIGNAL(clicked()),this,SLOT(startData()));
 
   panel_stop_button=new QPushButton(tr("S&top"),this);
+  panel_stop_button->setFocusPolicy(Qt::NoFocus);
   connect(panel_stop_button,SIGNAL(clicked()),this,SLOT(stopData()));
 
   panel_logo_label=new QLabel(this);
@@ -120,6 +125,7 @@ MainWidget::MainWidget(QWidget *parent)
 
   panel_config_button=new QPushButton(this);
   panel_config_button->setIcon(QPixmap(settings_xpm));
+  panel_config_button->setFocusPolicy(Qt::NoFocus);
   connect(panel_config_button,SIGNAL(clicked()),this,SLOT(configData()));
 
   MakeFontMap();
@@ -129,7 +135,7 @@ MainWidget::MainWidget(QWidget *parent)
   //
   LoadConfig();
   if(panel_clock_address.isNull()) {
-    if(panel_config_dialog->exec(&panel_clock_address)) {
+    if(panel_config_dialog->exec(&panel_clock_address,&panel_key_action)) {
       SaveConfig();
     }
     else {
@@ -172,7 +178,7 @@ void MainWidget::stopData()
 
 void MainWidget::configData()
 {
-  if(panel_config_dialog->exec(&panel_clock_address)) {
+  if(panel_config_dialog->exec(&panel_clock_address,&panel_key_action)) {
     SaveConfig();
   }
 }
@@ -182,6 +188,56 @@ void MainWidget::closeEvent(QCloseEvent *e)
 {
   SaveConfig();
   e->accept();
+}
+
+
+void MainWidget::keyReleaseEvent(QKeyEvent *e)
+{
+  switch(e->key()) {
+  case Qt::Key_Space:
+    switch(panel_key_action) {
+    case ConfigDialog::Start:
+      startData();
+      break;
+
+    case ConfigDialog::Stop:
+      stopData();
+      break;
+
+    case ConfigDialog::Preset:
+      presetData();
+      break;
+
+    case ConfigDialog::Reset:
+      resetData();
+      break;
+
+    case ConfigDialog::None:
+      break;
+    }
+    e->accept();
+    break;
+
+  case Qt::Key_S:
+    startData();
+    e->accept();
+    break;
+
+  case Qt::Key_T:
+    stopData();
+    e->accept();
+    break;
+
+  case Qt::Key_P:
+    presetData();
+    e->accept();
+    break;
+
+  case Qt::Key_C:
+    resetData();
+    e->accept();
+    break;
+  }
 }
 
 

@@ -28,15 +28,18 @@
 #include <QLineEdit>
 #include <QPushButton>
 
+#include "combobox.h"
+
 class ConfigDialog : public QDialog
 {
   Q_OBJECT
  public:
+  enum KeyAction {None=0,Start=1,Stop=2,Preset=3,Reset=4};
   ConfigDialog(QWidget *parent=0);
   QSize sizeHint() const;
 
  public slots:
-  int exec(QHostAddress *clock_addr);
+   int exec(QHostAddress *clock_addr,KeyAction *key_action);
 
  private slots:
   void okData();
@@ -46,11 +49,14 @@ class ConfigDialog : public QDialog
   void resizeEvent(QResizeEvent *e);
 
  private:
+  QLabel *config_keyaction_label;
+  ComboBox *config_keyaction_box;
   QLabel *config_address_label;
   QLineEdit *config_address_edit;
   QPushButton *config_ok_button;
   QPushButton *config_cancel_button;
   QHostAddress *config_clock_address;
+  KeyAction *config_key_action;
 };
 
 

@@ -52,6 +52,7 @@ class MainWidget : public QMainWindow
 
  protected:
   void closeEvent(QCloseEvent *e);
+  void keyReleaseEvent(QKeyEvent *e);
   void resizeEvent(QResizeEvent *e);
 
  private:
@@ -70,6 +71,7 @@ class MainWidget : public QMainWindow
   ConfigDialog *panel_config_dialog;
   QUdpSocket *panel_socket;
   QHostAddress panel_clock_address;
+  ConfigDialog::KeyAction panel_key_action;
   std::vector<int> panel_font_sizes;
   std::vector<int> panel_countdown_font_widths;
   std::vector<int> panel_preset_font_widths;
