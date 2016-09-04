@@ -153,14 +153,15 @@ QSize MainWidget::sizeHint() const
 
 void MainWidget::presetData()
 {
-  SendCommand(QString().sprintf("PS %d!",
+  SendCommand(panel_countmode_box->currentItemData().toString()+
+	      QString().sprintf("PS %d!",
 				QTime().secsTo(panel_preset_edit->time())));
 }
 
 
 void MainWidget::resetData()
 {
-  SendCommand("RS!");
+  SendCommand(panel_countmode_box->currentItemData().toString()+"RS!");
 }
 
 

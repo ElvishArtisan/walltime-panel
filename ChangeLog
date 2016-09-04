@@ -60,3 +60,6 @@
 	* Added 'walltime-panel.ism'.
 2016-09-02 Fred Gleason <fredg@paravelsystems.com>
 	* Incremented the package version to 0.6.3.
+2016-09-04 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'src/walltime-panel.cpp' that caused the timer to
+	count in the wrong direction after pressing 'Clear'.
