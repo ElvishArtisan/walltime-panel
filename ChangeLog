@@ -68,3 +68,7 @@
 	count in the wrong direction after pressing 'Clear'.
 2016-09-04 Fred Gleason <fredg@paravelsystems.com>
 	* Incremented the package version to 0.6.4.
+2016-10-25 Fred Gleason <fredg@paravelsystems.com>
+	* Updated 'AUTHORS'.
+	* Updated 'INSTALL'.
+	* Removed obsolete CVS tags.

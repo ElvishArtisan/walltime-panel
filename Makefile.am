@@ -20,11 +20,6 @@
 ##   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ##
 
-##if DOCBOOK_AM
-##  DOCBOOK_AM_OPT = docs
-##endif
-
-##SUBDIRS = $(DOCBOOK_AM_OPT) src
 SUBDIRS = icons\
           src\
           xdg

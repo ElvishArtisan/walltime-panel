@@ -32,24 +32,11 @@ AC_PROG_CXX
 AC_LANG(C++)
 
 #
-# Option Switches
-#
-AC_ARG_ENABLE(docbook,[  --disable-docbook       disable building of documentation],[DOCBOOK_DISABLED=yes],[])
-
-#
 # Check for Qt4 (Mandatory)
 #
 PKG_CHECK_MODULES(QT4,QtGui QtCore QtNetwork,[],[AC_MSG_ERROR([*** Qt4 not found ***])])
 AC_CHECK_PROG(MOC_NAME,moc-qt4,[moc-qt4],[moc])
 AC_SUBST(MOC,$MOC_NAME)
-
-#
-# Check for DocBook Toolchain
-#
-if test -z $DOCBOOK_DISABLED ; then
-  USING_DOCBOOK=yes
-fi
-AM_CONDITIONAL([DOCBOOK_AM], [test "$USING_DOCBOOK" = yes])
 
 #
 # Determine the target architecture
